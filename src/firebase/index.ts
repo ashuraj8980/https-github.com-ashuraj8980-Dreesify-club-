@@ -1,7 +1,7 @@
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import { app } from './config.js';
+import { app } from './config';
 
 // Get Firebase services
 const auth = getAuth(app);
