@@ -17,6 +17,11 @@ export default [
     plugins: {
       react,
     },
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
     rules: {
       ...js.configs.recommended.rules,
       ...react.configs.recommended.rules,

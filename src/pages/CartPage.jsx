@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { useCart } from '../context/CartContext';
-import { Trash2, ShoppingBag, ArrowRight, Minus, Plus } from 'lucide-react';
+import { Trash2, ArrowRight, Minus, Plus } from 'lucide-react';
 
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
@@ -21,7 +21,7 @@ const CartPage = () => {
           </div>
           <div className="max-w-xs border-l-2 border-secondary/10 pl-8">
             <p className="text-sm font-sans text-secondary/60 leading-relaxed italic">
-              "Items in your selection are reserved temporarily. Finalize your project to guarantee availability."
+              &quot;Items in your selection are reserved temporarily. Finalize your project to guarantee availability.&quot;
             </p>
           </div>
         </div>

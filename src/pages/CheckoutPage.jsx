@@ -41,7 +41,7 @@ const CheckoutPage = () => {
           </div>
           <div className="max-w-md border-l-2 border-secondary/10 pl-8">
             <p className="text-sm font-sans text-secondary/60 leading-relaxed italic mb-4">
-              "Every shipment is a manifestation of our structural integrity. Ensure your coordinates are precise."
+              &quot;Every shipment is a manifestation of our structural integrity. Ensure your coordinates are precise.&quot;
             </p>
             <div className="flex gap-4 items-center">
               <ShieldCheck size={20} className="text-accent" />
@@ -154,7 +154,7 @@ const CheckoutPage = () => {
 
                 <div className="space-y-8">
                    <p className="text-sm font-sans font-bold text-secondary/60 leading-relaxed italic">
-                     "By proceeding, you acknowledge the terms of the DREESIFY Collective regarding unique archival item distribution."
+                     &quot;By proceeding, you acknowledge the terms of the DREESIFY Collective regarding unique archival item distribution.&quot;
                    </p>
                    <button type="submit" className="w-full bg-secondary text-primary font-black uppercase text-[11px] tracking-[0.3em] py-8 shadow-3xl hover:bg-accent transition-all active:scale-95 cursor-pointer">
                      Execute Manifest

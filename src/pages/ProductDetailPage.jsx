@@ -143,7 +143,7 @@ const ProductDetailPage = () => {
 
                 <div className="pt-20">
                    <p className="text-[10px] font-black uppercase tracking-widest text-secondary/20 leading-loose">
-                     "Each DREESIFY artifact is a result of structural experimentation. Variations in texture and 'Raw Edge' finish are intentional manifestations of the design process."
+                     &quot;Each DREESIFY artifact is a result of structural experimentation. Variations in texture and &apos;Raw Edge&apos; finish are intentional manifestations of the design process.&quot;
                    </p>
                 </div>
              </motion.div>
