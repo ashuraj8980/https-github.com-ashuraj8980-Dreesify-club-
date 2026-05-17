@@ -1,17 +1,19 @@
 import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
 // Firebase configuration from your project
 const firebaseConfig = {
-  apiKey: "AIzaSyCkIuCEPA6rN_b-Cynomso1B-4mSxnACUo",
+  apiKey: "AIzaSyCkIUcEPA6rN_b-Cvnomso1B-4mSxmACUo",
   authDomain: "dressify-b3b82.firebaseapp.com",
   projectId: "dressify-b3b82",
   storageBucket: "dressify-b3b82.firebasestorage.app",
   messagingSenderId: "337593906590",
-  appId: "1:337593906590:web:366f8e3d79d96a7ad9128f",
-  measurementId: "G-QZQZPK6C5C"
+  appId: "1:337593906590:web:a3e80c261108f827d9128f",
+  measurementId: "G-5XST8WWHE6"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;
 
-export { app };
+export { app, analytics };
