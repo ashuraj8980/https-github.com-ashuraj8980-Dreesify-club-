@@ -1,0 +1,25 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if the user is the admin
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email == 'sanachauhan393@gmail.com';
+    }
+
+    // Rules for the 'products' collection
+    match /products/{productId} {
+      // Anyone can view the products
+      allow read: if true;
+
+      // Only the admin can create, update, or delete products
+      allow write, update, delete: if isAdmin();
+    }
+    
+    // Default lock: Disallow all other reads/writes in the database
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
