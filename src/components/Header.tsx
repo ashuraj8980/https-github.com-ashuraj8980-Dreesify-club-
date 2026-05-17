@@ -33,7 +33,7 @@ const Header = () => {
         <div className="flex justify-center">
           <Link to="/" className="flex items-center">
             <h1 className="text-2xl md:text-3xl font-black tracking-[-0.08em] leading-none text-secondary uppercase font-serif">
-              Aésthetè<span className="text-accent">™</span>
+              DRESSIFY<span className="text-accent">.</span>
             </h1>
           </Link>
         </div>
@@ -102,7 +102,7 @@ const Header = () => {
             >
               <div className="flex justify-between items-center mb-16">
                 <Link to="/" onClick={() => setIsMenuOpen(false)}>
-                  <h2 className="text-3xl font-black tracking-[-0.1em] font-serif uppercase">Aésthetè<span className="text-accent">™</span></h2>
+                  <h2 className="text-3xl font-black tracking-[-0.1em] font-serif uppercase">DRESSIFY<span className="text-accent">.</span></h2>
                 </Link>
                 <button onClick={() => setIsMenuOpen(false)} className="p-2 hover:bg-secondary/5 rounded-full cursor-pointer">
                   <X size={32} />
@@ -135,7 +135,7 @@ const Header = () => {
                 </div>
                 
                 <div className="flex justify-between items-center opacity-60">
-                   <p className="text-[10px] font-black font-sans uppercase">© 2024 Aésthetè Global</p>
+                   <p className="text-[10px] font-black font-sans uppercase">© 2024 DRESSIFY Global</p>
                    <div className="flex gap-4">
                      <span className="w-1 h-1 rounded-full bg-secondary"></span>
                      <span className="w-1 h-1 rounded-full bg-secondary"></span>

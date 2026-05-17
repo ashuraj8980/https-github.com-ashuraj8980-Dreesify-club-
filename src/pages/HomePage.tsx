@@ -21,7 +21,7 @@ const HomePage = () => {
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-12">
         {/* Left Hero Column */}
         <div className="lg:col-span-7 p-8 md:p-16 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-secondary/10 relative overflow-hidden bg-white/40">
-          <div className="absolute -left-4 top-1/2 -translate-y-1/2 text-[120px] md:text-[200px] font-black opacity-[0.03] select-none pointer-events-none font-serif text-secondary uppercase">AÈST</div>
+          <div className="absolute -left-4 top-1/2 -translate-y-1/2 text-[120px] md:text-[200px] font-black opacity-[0.03] select-none pointer-events-none font-serif text-secondary uppercase">DRSF</div>
           
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -34,14 +34,14 @@ const HomePage = () => {
                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-secondary/40 font-sans">Global Capsule Release</span>
             </div>
             <h2 className="text-[60px] md:text-[120px] leading-[0.8] font-black italic mb-10 tracking-[-0.05em] font-serif text-secondary uppercase">
-               Archivè<br/><span className="text-accent underline decoration-secondary/5 underline-offset-12">System 01</span>
+               DRESSIFY<br/><span className="text-accent underline decoration-secondary/5 underline-offset-12">System 01</span>
             </h2>
             <p className="max-w-md text-xl leading-relaxed text-secondary/70 font-sans font-medium">
               A curated physical experience exploring the intersection of brutalist architecture and functional avant-garde apparel.
             </p>
             <div className="mt-16 flex flex-wrap items-center gap-8">
               <Link to="/products" className="px-12 py-6 bg-secondary text-primary font-sans font-black uppercase tracking-widest text-[11px] flex items-center gap-6 active:scale-95 transition-all hover:bg-accent shadow-2xl">
-                Enter The Archive
+                Enter DRESSIFY
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
               </Link>
               <div className="flex flex-col">

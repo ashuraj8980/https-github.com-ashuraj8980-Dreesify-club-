@@ -187,7 +187,7 @@ const AdminPage = () => {
       <aside className="w-full md:w-72 bg-white border-r border-secondary/5 p-10 flex flex-col flex-shrink-0">
         <div className="mb-16">
           <h2 className="text-2xl font-black tracking-[-0.05em] text-secondary font-serif uppercase">Terminal<span className="text-accent">.</span></h2>
-          <p className="text-[9px] font-sans font-bold uppercase tracking-[0.3em] opacity-30 mt-2 italic">Aésthetè Control v2.0</p>
+          <p className="text-[9px] font-sans font-bold uppercase tracking-[0.3em] opacity-30 mt-2 italic">DRESSIFY Control v2.0</p>
         </div>
 
         <nav className="space-y-2 flex-1">
@@ -238,7 +238,7 @@ const AdminPage = () => {
               <div className="w-8 h-[2px] bg-accent"></div>
               <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40">Operational Grid</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-black tracking-tighter font-serif italic text-secondary uppercase leading-[0.9]">Archive<br/><span className="text-accent">Manager</span></h1>
+            <h1 className="text-5xl md:text-7xl font-black tracking-tighter font-serif italic text-secondary uppercase leading-[0.9]">DRESSIFY<br/><span className="text-accent">Manager</span></h1>
           </div>
           
           <button 
@@ -434,7 +434,8 @@ const AdminPage = () => {
             </table>
           </div>
         </div>
-      </main>
+      )}
+    </main>
 
       {/* Add/Edit Modal */}
       <AnimatePresence>

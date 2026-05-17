@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="bg-white border-t border-secondary/10">
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="col-span-1 md:col-span-1">
-          <h2 className="text-2xl font-black tracking-tighter mb-6">DREESIFY<span className="text-accent">.</span></h2>
+          <h2 className="text-2xl font-black tracking-tighter mb-6">DRESSIFY<span className="text-accent">.</span></h2>
           <p className="text-sm leading-relaxed text-secondary/60 font-sans mb-8">
             The Experimental Style Collective. Redefining fashion through the lens of brutalist architecture and functional avant-garde essentials.
           </p>
@@ -62,7 +62,7 @@ const Footer = () => {
       {/* Marquee Footer */}
       <div className="h-12 bg-secondary text-primary flex items-center overflow-hidden">
         <div className="flex animate-marquee whitespace-nowrap gap-20 opacity-80 font-sans text-[10px] font-bold uppercase tracking-[0.5em] px-12">
-          <span>DREESIFY CLUB EXCLUSIVE ACCESS</span>
+          <span>DRESSIFY CLUB EXCLUSIVE ACCESS</span>
           <span>●</span>
           <span>AUTUMN 24 LOOKBOOK RELEASED</span>
           <span>●</span>
@@ -70,7 +70,7 @@ const Footer = () => {
           <span>●</span>
           <span>GLOBAL SHIPPING INCLUDED</span>
           <span>●</span>
-          <span>DREESIFY CLUB EXCLUSIVE ACCESS</span>
+          <span>DRESSIFY CLUB EXCLUSIVE ACCESS</span>
           <span>●</span>
           <span>AUTUMN 24 LOOKBOOK RELEASED</span>
           <span>●</span>

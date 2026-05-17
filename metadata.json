@@ -1,6 +1,8 @@
 {
-  "name": "",
-  "description": "",
+  "name": "DRESSIFY",
+  "description": "Premium avant-garde fashion collective. Brutalist-inspired silhouettes and technical apparel archives.",
   "requestFramePermissions": [],
-  "majorCapabilities": []
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

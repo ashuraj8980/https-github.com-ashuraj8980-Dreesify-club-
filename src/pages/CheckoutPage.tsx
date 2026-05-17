@@ -154,7 +154,7 @@ const CheckoutPage = () => {
 
                 <div className="space-y-8">
                    <p className="text-sm font-sans font-bold text-secondary/60 leading-relaxed italic">
-                     &quot;By proceeding, you acknowledge the terms of the DREESIFY Collective regarding unique archival item distribution.&quot;
+                     &quot;By proceeding, you acknowledge the terms of the DRESSIFY Collective regarding unique archival item distribution.&quot;
                    </p>
                    <button type="submit" className="w-full bg-secondary text-primary font-black uppercase text-[11px] tracking-[0.3em] py-8 shadow-3xl hover:bg-accent transition-all active:scale-95 cursor-pointer">
                      Execute Manifest

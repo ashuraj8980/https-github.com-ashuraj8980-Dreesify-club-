@@ -63,13 +63,13 @@ const ProductPage = () => {
                <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40">System Registry / Archives</span>
             </div>
             <h1 className="text-6xl md:text-9xl font-black tracking-[-0.05em] font-serif uppercase italic leading-none">
-              {getTitle().split(' ')[0]}<br/>
-              <span className="text-accent underline decoration-secondary/10 underline-offset-16">{getTitle().split(' ').slice(1).join(' ') || 'Archive'}</span>
+              DRESSIFY<br/>
+              <span className="text-accent underline decoration-secondary/10 underline-offset-16">{categoryParam ? (categoryParam.toUpperCase() + ' SERIES') : 'ARCHIVE'}</span>
             </h1>
           </div>
           <div className="max-w-xs">
             <p className="text-sm font-sans font-medium text-secondary/60 leading-relaxed mb-8">
-              A meticulously curated selection of tactical garments and archival silhouettes. Each piece is authenticated and registered within the Aésthetè Collective database.
+              A meticulously curated selection of tactical garments and archival silhouettes. Each piece is authenticated and registered within the DRESSIFY Collective database.
             </p>
             <div className="flex flex-wrap gap-4">
               <span className="text-[9px] font-black uppercase tracking-widest border border-secondary/20 px-4 py-2 bg-white flex items-center gap-2">

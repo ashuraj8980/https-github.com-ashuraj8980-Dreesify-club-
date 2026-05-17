@@ -113,7 +113,7 @@ const ProductDetailPage = () => {
                    <div className="bg-white/90 backdrop-blur-md p-6 border border-secondary/10 shadow-2xl space-y-4">
                       <div className="space-y-1">
                          <p className="text-[9px] font-black uppercase tracking-widest opacity-30 uppercase">Authentication</p>
-                         <p className="text-xs font-black italic">Aésthetè™ Verified</p>
+                         <p className="text-xs font-black italic">DRESSIFY™ Verified</p>
                       </div>
                       <div className="flex gap-2">
                          <div className="w-8 h-1 bg-accent"></div>
@@ -203,7 +203,7 @@ const ProductDetailPage = () => {
                       <span className="text-[9px] font-black uppercase tracking-[0.4em] opacity-30">Archive Philosophy</span>
                    </div>
                    <p className="text-[11px] font-bold italic uppercase tracking-widest text-secondary/30 leading-loose">
-                     &quot;The artifact you are viewing is part of the Aésthetè Archivè series. We reject seasonal trends in favor of timeless structural integrity. Every garment is a statement of architectural intent.&quot;
+                     &quot;The artifact you are viewing is part of the DRESSIFY Archivè series. We reject seasonal trends in favor of timeless structural integrity. Every garment is a statement of architectural intent.&quot;
                    </p>
                 </div>
              </motion.div>
