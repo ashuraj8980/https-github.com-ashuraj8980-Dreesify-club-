@@ -4,35 +4,24 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase';
 import { useCart } from '../context/CartContext';
 import { motion } from 'motion/react';
-import { ShoppingBag, ChevronLeft, ShieldCheck, Truck } from 'lucide-react';
+import { ShoppingBag, ChevronLeft, ShieldCheck, Truck, ArrowRight, History } from 'lucide-react';
 
 const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchProduct = async () => {
+      if (!id) return;
       try {
         const docRef = doc(db, "products", id);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
           setProduct({ id: docSnap.id, ...docSnap.data() });
-        } else {
-          // Fallback if not in DB, use mock for demo
-          const productsList = [
-            { id: 1, name: 'Monochrome Shell', price: 240, category: 'Outerwear', code: 'A1', img: 'https://images.unsplash.com/photo-1544441893-675973e31d85?auto=format&fit=crop&q=80', description: 'Technically constructed shell with multi-layer membrane. Waterproof, wind-resistant, and archival in silhouette.' },
-            { id: 2, name: 'Raw Edge Hoodie', price: 180, category: 'Innerwear', code: 'A2', img: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80', description: 'Heavyweight loopback cotton with hand-finished raw edge detailing. Over-sized drop shoulder construction.' },
-            { id: 3, name: 'Asymmetric Drapery', price: 120, category: 'Essentials', code: 'A3', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80', description: 'Lightweight jersey with experimental draping logic. Designed for layering in high-density urban environments.' },
-            { id: 4, name: 'Cargo Variant 01', price: 210, category: 'Trousers', code: 'A4', img: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&q=80' },
-            { id: 5, name: 'Brutalist Tote', price: 95, category: 'Accessory', code: 'A5', img: 'https://images.unsplash.com/photo-1544816153-09730734bh7f?auto=format&fit=crop&q=80' },
-            { id: 6, name: 'Tonal Rib Knit', price: 150, category: 'Knitwear', code: 'A6', img: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&q=80' },
-          ];
-          const mockProduct = productsList.find(p => p.id === parseInt(id));
-          if (mockProduct) setProduct(mockProduct);
         }
       } catch (error) {
         console.error("Error fetching product: ", error);
@@ -46,104 +35,175 @@ const ProductDetailPage = () => {
 
   const handleAddToCart = () => {
     if (product) {
-      addToCart(product);
-      // We could use a toast here instead of alert
+      addToCart({
+        ...product,
+        price: parseFloat(product.price)
+      });
     }
   };
 
   if (isLoading) {
     return (
-      <div className="bg-[#FDFCFB] min-h-screen flex items-center justify-center">
-        <p className="text-[10px] font-black uppercase tracking-[0.5em] animate-pulse">Initializing Data Stream...</p>
+      <div className="bg-[#FAF9F6] min-h-screen flex items-center justify-center">
+        <div className="text-center">
+           <div className="w-16 h-16 border-2 border-secondary/10 border-t-accent rounded-full animate-spin mb-6 mx-auto"></div>
+           <p className="text-[10px] font-black uppercase tracking-[0.5em] animate-pulse">Decrypting Product Metadata...</p>
+        </div>
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="bg-[#FDFCFB] min-h-screen flex flex-col items-center justify-center gap-8">
-        <p className="text-xl font-serif font-black italic opacity-20 uppercase tracking-widest text-secondary">Entry not found in Archive</p>
-        <button onClick={() => navigate('/products')} className="bg-secondary text-primary px-10 py-4 text-[10px] font-black uppercase tracking-widest hover:bg-accent transition-all shadow-xl">
-          Return to The Archive
-        </button>
+      <div className="bg-[#FAF9F6] min-h-screen flex flex-col items-center justify-center p-8">
+        <div className="max-w-md text-center">
+           <History className="mx-auto text-secondary/10 mb-10" size={80} />
+           <h2 className="text-4xl font-serif font-black italic text-secondary leading-none mb-6 uppercase">Archive Entry Missing</h2>
+           <p className="text-[11px] font-black uppercase tracking-[0.3em] opacity-30 leading-relaxed mb-12">
+             The requested object identifier does not correspond to any active physical inventory in the current series.
+           </p>
+           <button onClick={() => navigate('/products')} className="bg-secondary text-primary px-12 py-6 text-[10px] font-black uppercase tracking-widest hover:bg-accent transition-all shadow-3xl">
+             Return to Global Registry
+           </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-[#FDFCFB] min-h-screen pb-40">
-      <section className="px-6 md:px-12 py-12 border-b border-secondary/10 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-accent mb-6 hover:-translate-x-2 transition-transform cursor-pointer">
-            <ChevronLeft size={16} /> Retrograde to Archive
+    <div className="bg-[#FAF9F6] min-h-screen">
+      {/* Detail Header / Breadcrumb */}
+      <section className="px-6 md:px-16 py-12 border-b border-secondary/5 bg-white relative z-20">
+        <div className="max-w-screen-2xl mx-auto flex justify-between items-center">
+          <button onClick={() => navigate(-1)} className="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-accent hover:text-secondary hover:-translate-x-3 transition-all cursor-pointer group">
+            <ChevronLeft size={16} className="group-hover:scale-125 transition-transform" /> Back to Collection
           </button>
+          <div className="flex items-center gap-6">
+             <span className="text-[10px] font-black uppercase tracking-widest opacity-20">Catalog Status:</span>
+             <span className="text-[10px] font-black uppercase tracking-widest text-green-500 bg-green-50 px-3 py-1">Stock Verified</span>
+          </div>
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
-          {/* Image Column */}
+      <div className="max-w-screen-2xl mx-auto px-6 md:px-16 py-12 md:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 xl:gap-32">
+          {/* Visual Column */}
           <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="lg:col-span-7 space-y-12"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-7"
           >
-            <div className="aspect-[3/4] bg-secondary/5 border border-secondary/10 relative group overflow-hidden">
-                <img src={product.img || product.imageUrl} alt={product.name} className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000" />
-                <div className="absolute top-8 left-8 bg-white/80 p-4 text-[10px] font-black italic shadow-2xl border border-secondary/5">
-                  SERIES_REF: {product.code || ('A'+product.id)}
+            <div className="aspect-[3/4] md:aspect-square lg:aspect-[4/5] bg-white border border-secondary/5 relative group overflow-hidden shadow-2xl">
+                <img 
+                  src={product.imageUrl} 
+                  alt={product.name} 
+                  className="w-full h-full object-cover transition-all duration-1000 scale-[1.02]" 
+                />
+                
+                {/* Visual Overlays */}
+                <div className="absolute top-10 left-10 z-20 bg-secondary text-primary p-6 text-[10px] font-black italic shadow-2xl skew-x-[-12deg]">
+                   <div className="skew-x-[12deg]">
+                      <p className="opacity-40 mb-1 border-b border-primary/20 pb-1">INVENTORY_ID</p>
+                      <p className="text-lg">{product.inventoryCode || `A-${product.id.substring(0, 6)}`}</p>
+                   </div>
+                </div>
+
+                <div className="absolute bottom-10 right-10 z-20 hidden md:block">
+                   <div className="bg-white/90 backdrop-blur-md p-6 border border-secondary/10 shadow-2xl space-y-4">
+                      <div className="space-y-1">
+                         <p className="text-[9px] font-black uppercase tracking-widest opacity-30 uppercase">Authentication</p>
+                         <p className="text-xs font-black italic">Aésthetè™ Verified</p>
+                      </div>
+                      <div className="flex gap-2">
+                         <div className="w-8 h-1 bg-accent"></div>
+                         <div className="w-4 h-1 bg-secondary/10"></div>
+                         <div className="w-12 h-1 bg-secondary/10"></div>
+                      </div>
+                   </div>
                 </div>
             </div>
           </motion.div>
 
-          {/* Details Column */}
-          <div className="lg:col-span-5 flex flex-col pt-10">
+          {/* Configuration Column */}
+          <div className="lg:col-span-5 flex flex-col pt-4">
              <motion.div 
-               initial={{ opacity: 0, y: 20 }}
-               animate={{ opacity: 1, y: 0 }}
-               transition={{ delay: 0.2 }}
+               initial={{ opacity: 0, x: 30 }}
+               animate={{ opacity: 1, x: 0 }}
+               transition={{ duration: 0.6, delay: 0.2 }}
                className="space-y-12"
              >
-                <div>
-                  <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-4 block">{product.category} / ARCHIVE COLLECTION</span>
-                  <h1 className="text-6xl md:text-7xl font-black tracking-tighter font-serif italic text-secondary uppercase leading-[0.85] mb-6">
-                    {product.name}
+                <div className="space-y-6">
+                  <div className="flex items-center gap-4">
+                     <span className="px-3 py-1 bg-secondary text-primary text-[9px] font-black uppercase tracking-[0.2em]">{product.category}</span>
+                     <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                     <span className="text-[9px] font-black text-accent uppercase tracking-widest italic">New Arrival Entry</span>
+                  </div>
+                  <h1 className="text-6xl xl:text-8xl font-black tracking-[-0.05em] font-serif italic text-secondary uppercase leading-[0.85]">
+                     {product.name}
                   </h1>
-                  <p className="text-4xl font-serif font-black italic text-accent">${product.price}</p>
+                  <div className="flex items-end gap-6">
+                     <p className="text-5xl font-serif font-black italic text-accent leading-none">${product.price}</p>
+                     <p className="text-[10px] font-black uppercase tracking-widest opacity-20 pb-1 underline decoration-accent/30 decoration-2 underline-offset-4">VAT Included</p>
+                  </div>
                 </div>
 
-                <div className="h-px bg-secondary/10"></div>
+                <div className="h-px bg-secondary/5"></div>
 
                 <div className="space-y-6">
-                    <h4 className="text-[10px] font-black uppercase tracking-widest text-secondary/40">Technical Specs</h4>
-                    <p className="text-sm font-sans text-secondary/60 leading-relaxed italic">
-                      {product.description || "Experimental silhouette developed for high-performance urban utility. Archival grade textile construction."}
+                    <div className="flex justify-between items-center">
+                       <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-secondary">Tactical Specification</h4>
+                       <span className="text-[9px] font-black uppercase text-accent">Expand Documentation +</span>
+                    </div>
+                    <p className="text-sm font-medium font-sans text-secondary/60 leading-relaxed italic border-l-2 border-secondary/5 pl-8 py-2">
+                      {product.description || "A meticulously constructed silhouette exploring the dialogue between rigid brutalist geometry and fluid organic movement. This archive piece features reinforced structural seams and a high-density tactical finish."}
                     </p>
                 </div>
 
-                <div className="space-y-6 pt-6">
-                  <button 
-                    onClick={handleAddToCart}
-                    className="w-full bg-secondary text-primary font-black uppercase text-[11px] tracking-[0.3em] py-8 shadow-3xl hover:bg-accent transition-all active:scale-95 flex items-center justify-center gap-4 group cursor-pointer"
-                  >
-                    Allocate to Project <ShoppingBag size={18} className="group-hover:rotate-12 transition-transform" />
-                  </button>
+                <div className="space-y-8 pt-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                     <button 
+                       onClick={handleAddToCart}
+                       className="w-full bg-secondary text-primary font-black uppercase text-[11px] tracking-[0.3em] py-8 shadow-2xl hover:bg-accent transition-all active:scale-95 flex items-center justify-center gap-6 group cursor-pointer"
+                     >
+                       ADD TO CART <ShoppingBag size={18} className="group-hover:rotate-12 transition-transform" />
+                     </button>
+                     <button 
+                       onClick={() => {
+                          handleAddToCart();
+                          navigate('/checkout');
+                       }}
+                       className="w-full bg-white border border-secondary text-secondary font-black uppercase text-[11px] tracking-[0.3em] py-8 shadow-sm hover:bg-secondary hover:text-primary transition-all active:scale-95 flex items-center justify-center gap-6 group cursor-pointer"
+                     >
+                       BUY IT NOW <ArrowRight size={18} className="group-hover:translate-x-3 transition-transform" />
+                     </button>
+                  </div>
                   
                   <div className="grid grid-cols-2 gap-4">
-                     <div className="p-6 border border-secondary/5 bg-white flex flex-col gap-3">
-                        <Truck size={16} className="text-accent" />
-                        <span className="text-[9px] font-black uppercase tracking-widest">Global Dispatch</span>
+                     <div className="p-8 border border-secondary/5 bg-white flex flex-col gap-4 group hover:border-accent transition-colors">
+                        <Truck size={20} className="text-accent group-hover:translate-x-2 transition-transform" />
+                        <div>
+                           <p className="text-[10px] font-black uppercase tracking-widest mb-1">Global Dispatch</p>
+                           <p className="text-[9px] font-medium opacity-40 uppercase">3-5 Business Cycles</p>
+                        </div>
                      </div>
-                     <div className="p-6 border border-secondary/5 bg-white flex flex-col gap-3">
-                        <ShieldCheck size={16} className="text-accent" />
-                        <span className="text-[9px] font-black uppercase tracking-widest">Secured Archive</span>
+                     <div className="p-8 border border-secondary/5 bg-white flex flex-col gap-4 group hover:border-accent transition-colors">
+                        <ShieldCheck size={20} className="text-accent group-hover:scale-110 transition-transform" />
+                        <div>
+                           <p className="text-[10px] font-black uppercase tracking-widest mb-1">Archive Secure</p>
+                           <p className="text-[9px] font-medium opacity-40 uppercase">Authenticated Artifact</p>
+                        </div>
                      </div>
                   </div>
                 </div>
 
-                <div className="pt-20">
-                   <p className="text-[10px] font-black uppercase tracking-widest text-secondary/20 leading-loose">
-                     &quot;Each DREESIFY artifact is a result of structural experimentation. Variations in texture and &apos;Raw Edge&apos; finish are intentional manifestations of the design process.&quot;
+                <div className="pt-24 border-t border-secondary/5">
+                   <div className="flex items-center gap-6 mb-4">
+                      <div className="w-10 h-[1px] bg-secondary/10"></div>
+                      <span className="text-[9px] font-black uppercase tracking-[0.4em] opacity-30">Archive Philosophy</span>
+                   </div>
+                   <p className="text-[11px] font-bold italic uppercase tracking-widest text-secondary/30 leading-loose">
+                     &quot;The artifact you are viewing is part of the Aésthetè Archivè series. We reject seasonal trends in favor of timeless structural integrity. Every garment is a statement of architectural intent.&quot;
                    </p>
                 </div>
              </motion.div>

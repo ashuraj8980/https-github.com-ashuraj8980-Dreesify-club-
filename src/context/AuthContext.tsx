@@ -27,10 +27,13 @@ export const AuthProvider = ({ children }) => {
   const auth = getAuth(app);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user: any) => {
       if (user) {
-        // Simple admin check based on email
-        user.isAdmin = user.email === 'sanachauhan393@gmail.com' || user.email === 'ashukumar8076801908@gmail.com';
+        // Simple admin/owner check based on email
+        const ownerEmails = ['sanachauhan393@gmail.com', 'ashukumar8076801908@gmail.com'];
+        user.isAdmin = ownerEmails.includes(user.email);
+        user.isOwner = ownerEmails.includes(user.email);
+        user.displayName = user.email === 'ashukumar8076801908@gmail.com' ? 'Ashu' : (user.email === 'sanachauhan393@gmail.com' ? 'Sana' : user.displayName);
       }
       setUser(user);
       setLoading(false);
