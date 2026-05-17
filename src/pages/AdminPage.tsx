@@ -71,7 +71,9 @@ const AdminPage = () => {
             </div>
             <div className="overflow-hidden">
               <p className="text-[10px] font-black uppercase tracking-widest truncate">{user?.email}</p>
-              <p className="text-[9px] font-bold uppercase text-accent">Tier 01 Operator</p>
+              <p className="text-[9px] font-bold uppercase text-accent">
+                {user?.isAdmin ? 'Tier 01 Operator' : 'Unauthorized Access'}
+              </p>
             </div>
           </div>
         </div>

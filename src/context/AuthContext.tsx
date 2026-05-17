@@ -2,10 +2,23 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { app } from '../firebase/config';
 
-const AuthContext = createContext();
+interface AuthContextType {
+  user: any;
+  setUser: React.Dispatch<React.SetStateAction<any>>;
+  loading: boolean;
+  login: (email: string, password: string) => Promise<any>;
+  signup: (email: string, password: string) => Promise<any>;
+  logout: () => Promise<void>;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 };
 
 export const AuthProvider = ({ children }) => {
@@ -15,6 +28,10 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Simple admin check based on email
+        user.isAdmin = user.email === 'sanachauhan393@gmail.com' || user.email === 'ashukumar8076801908@gmail.com';
+      }
       setUser(user);
       setLoading(false);
     });

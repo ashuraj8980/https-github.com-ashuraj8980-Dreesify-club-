@@ -54,7 +54,9 @@ const Header = () => {
 
           {user ? (
             <div className="flex items-center gap-6">
-              <Link to="/admin" className="hidden md:block text-[10px] font-black uppercase tracking-widest hover:text-accent">Portal</Link>
+              {user.isAdmin && (
+                <Link to="/admin" className="hidden md:block text-[10px] font-black uppercase tracking-widest hover:text-accent">Portal</Link>
+              )}
               <button 
                 onClick={logout}
                 className="bg-secondary text-primary px-5 py-2 text-[10px] font-black uppercase tracking-widest hover:bg-accent transition-all rounded-sm cursor-pointer"
@@ -103,7 +105,7 @@ const Header = () => {
                 <Link to="/" onClick={() => setIsMenuOpen(false)} className="hover:text-accent transition-colors">Manifesto</Link>
                 <Link to="/products" onClick={() => setIsMenuOpen(false)} className="hover:text-accent transition-colors">The Archive</Link>
                 <Link to="/cart" onClick={() => setIsMenuOpen(false)} className="hover:text-accent transition-colors">Club Cart</Link>
-                {user && (
+                {user?.isAdmin && (
                  <Link to="/admin" onClick={() => setIsMenuOpen(false)} className="hover:text-accent transition-colors">Admin Portal</Link>
                 )}
               </nav>
