@@ -128,19 +128,19 @@ const Header = () => {
               <X size={32} />
             </button>
             
-            <div className="flex-1 overflow-y-auto px-8 py-10">
-              <nav className="flex flex-col items-center gap-6 max-w-md mx-auto">
+            <div className="flex-1 overflow-y-auto px-8 py-4">
+              <nav className="flex flex-col items-center gap-4 max-w-md mx-auto">
                 {categories.map((cat, idx) => (
                   <motion.div
                     key={cat.name}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.05 }}
+                    transition={{ delay: idx * 0.03 }}
                   >
                     <Link 
                       to={cat.path} 
                       onClick={() => setIsMenuOpen(false)}
-                      className="text-2xl md:text-3xl font-bold hover:text-accent transition-colors uppercase tracking-tight"
+                      className="text-base md:text-lg font-bold hover:text-accent transition-colors uppercase tracking-widest text-center block py-1"
                     >
                       {cat.name}
                     </Link>
@@ -153,7 +153,7 @@ const Header = () => {
                       logout();
                       setIsMenuOpen(false);
                     }}
-                    className="mt-8 text-sm font-black uppercase tracking-[0.3em] text-accent border-b-2 border-accent"
+                    className="mt-6 text-xs font-bold uppercase tracking-[0.2em] text-accent border-b border-accent py-1"
                   >
                     Logout
                   </button>
@@ -161,7 +161,7 @@ const Header = () => {
                   <Link 
                     to="/login" 
                     onClick={() => setIsMenuOpen(false)}
-                    className="mt-8 text-sm font-black uppercase tracking-[0.3em] text-accent border-b-2 border-accent"
+                    className="mt-6 text-xs font-bold uppercase tracking-[0.2em] text-accent border-b border-accent py-1"
                   >
                     Login / Signup
                   </Link>

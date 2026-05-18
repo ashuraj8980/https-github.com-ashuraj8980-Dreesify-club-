@@ -90,6 +90,8 @@ const HomePage = () => {
                 <img 
                   src={banner.image} 
                   alt={banner.title} 
+                  loading={idx === 0 ? "eager" : "lazy"}
+                  referrerPolicy="no-referrer"
                   className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-[10s] ease-linear" 
                 />
                 <div className="absolute inset-0 bg-black/30 flex items-center justify-center text-center px-4">
@@ -116,7 +118,7 @@ const HomePage = () => {
 
       {/* Featured Categories */}
       <section className="py-24 px-6 md:px-12 max-w-[1920px] mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+        <div className="flex flex-col items-center text-center mb-16 gap-6">
            <div className="space-y-4">
               <span className="text-xs font-bold uppercase tracking-widest text-accent">Categorical Archive</span>
               <h3 className="text-4xl md:text-6xl font-bold uppercase leading-tight">Curated<br/>Segments</h3>
@@ -127,7 +129,7 @@ const HomePage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
            {categories.map((cat, idx) => (
              <Link key={idx} to={`/products?category=${cat.name}`} className="group relative aspect-[3/4] overflow-hidden bg-secondary/5">
-                <img src={cat.image} alt={cat.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" />
+                <img src={cat.image} alt={cat.name} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex flex-col justify-end p-8 text-white">
                    <span className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-2">Registry 0{idx + 1}</span>
                    <h4 className="text-2xl font-bold uppercase">{cat.name}</h4>
@@ -191,7 +193,7 @@ const HomePage = () => {
       {/* Trending Collection */}
       <section className="py-24 bg-white">
         <div className="px-6 md:px-12 max-w-[1920px] mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div className="flex flex-col items-center text-center mb-16 gap-6">
              <div className="space-y-4">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-accent">Popular Protocols</span>
                 <h3 className="text-4xl md:text-6xl font-bold uppercase leading-tight">Trending<br/>Now</h3>
@@ -272,6 +274,8 @@ const ProductCard = ({ product }: { product: any }) => {
         <img 
           src={product.imageUrl} 
           alt={product.name} 
+          loading="lazy"
+          referrerPolicy="no-referrer"
           className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110" 
         />
         {product.discount > 0 && (

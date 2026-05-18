@@ -152,7 +152,7 @@ const ProductDetailPage = () => {
               >
                 {images.map((img: string, idx: number) => (
                   <SwiperSlide key={idx}>
-                    <img src={img} alt={`${product.name} ${idx}`} className="w-full h-full object-cover" />
+                    <img src={img} alt={`${product.name} ${idx}`} loading={idx === 0 ? "eager" : "lazy"} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -168,7 +168,7 @@ const ProductDetailPage = () => {
               >
                 {images.map((img: string, idx: number) => (
                   <SwiperSlide key={idx} className="cursor-pointer border border-secondary/5 overflow-hidden opacity-50 hover:opacity-100 transition-opacity [&.swiper-slide-thumb-active]:opacity-100 [&.swiper-slide-thumb-active]:border-accent [&.swiper-slide-thumb-active]:border-2">
-                    <img src={img} alt={`thumb ${idx}`} className="w-full h-full object-cover" />
+                    <img src={img} alt={`thumb ${idx}`} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -354,7 +354,7 @@ const ProductDetailPage = () => {
         {/* Related Section */}
         {relatedProducts.length > 0 && (
           <section className="mt-40">
-             <div className="flex justify-between items-end mb-16 px-4">
+             <div className="flex flex-col items-center text-center mb-16 px-4 gap-6">
                 <div className="space-y-4">
                    <span className="text-xs font-bold uppercase tracking-widest text-accent">Related Synchronizations</span>
                    <h3 className="text-4xl md:text-5xl font-bold uppercase leading-tight">Complete<br/>The Aesthetic</h3>
@@ -386,6 +386,8 @@ const ProductCard = ({ product }: { product: any }) => {
         <img 
           src={product.imageUrl} 
           alt={product.name} 
+          loading="lazy"
+          referrerPolicy="no-referrer"
           className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110" 
         />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">

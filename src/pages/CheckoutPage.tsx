@@ -137,20 +137,20 @@ const CheckoutPage = () => {
 
   return (
     <div className="bg-[#FDFCFB] min-h-screen pb-40">
-      <section className="px-6 md:px-12 py-16 md:py-24 border-b border-secondary/10 bg-white mb-20">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end gap-12">
-          <div>
+      <section className="px-6 md:px-12 py-16 md:py-24 border-b border-secondary/10 bg-white mb-20 text-center">
+        <div className="max-w-7xl mx-auto flex flex-col items-center gap-12">
+          <div className="flex flex-col items-center">
             <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent mb-6 hover:-translate-x-2 transition-transform cursor-pointer">
               <ChevronLeft size={16} /> Back to Cart
             </button>
             <span className="text-xs font-bold uppercase tracking-widest opacity-40 mb-4 block">Final Stage / Dispatch Logistics</span>
             <h1 className="text-6xl md:text-8xl font-bold tracking-tight uppercase leading-none">The<br/><span className="text-accent">Protocols</span></h1>
           </div>
-          <div className="max-w-md border-l-2 border-secondary/10 pl-8">
+          <div className="max-w-md border-t-2 md:border-t-0 md:border-l-2 border-secondary/10 pt-8 md:pt-0 md:pl-8">
             <p className="text-sm font-sans text-secondary/60 leading-relaxed mb-4">
               "Ensuring your shipment reaches you with precision and care."
             </p>
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-4 items-center justify-center">
               <ShieldCheck size={20} className="text-accent" />
               <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-secondary">Verified Secure Tunnel Protocol Active</span>
             </div>
@@ -264,7 +264,7 @@ const CheckoutPage = () => {
                     {cart.map((item) => (
                       <div key={item.id} className="flex gap-4">
                         <div className="w-16 h-20 bg-secondary/5 flex-shrink-0">
-                          <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
+                          <img src={item.imageUrl} alt={item.name} loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-[11px] font-bold uppercase tracking-widest text-secondary truncate">{item.name}</p>
@@ -326,5 +326,4 @@ const CheckoutPage = () => {
   );
 };
 
-import { ArrowRight } from 'lucide-react';
 export default CheckoutPage;
