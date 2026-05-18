@@ -46,14 +46,33 @@ const AdminPage = () => {
   // Form State
   const [formData, setFormData] = useState({
     name: '',
-    category: 'Modern',
+    category: 'Women Clothing',
     price: '',
+    originalPrice: '',
     stock: '',
     description: '',
-    image: null as File | null
+    images: [] as File[],
+    existingImageUrls: [] as string[],
+    sizes: 'XS, S, M, L, XL',
+    colors: 'White, Black, Peach',
+    isTrending: false,
+    isNewArrival: true,
+    isBestSeller: false,
+    discount: '0'
   });
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
+
+  const categories = [
+    'Women Clothing',
+    'Him & Her Sets',
+    'Combo Sets',
+    'Birthday Dresses',
+    'Party Wear',
+    'Casual Wear',
+    'New Arrivals',
+    'Trending Collection'
+  ];
 
   useEffect(() => {
     const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
@@ -74,13 +93,29 @@ const AdminPage = () => {
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target as HTMLInputElement;
+    const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+    setFormData(prev => ({ ...prev, [name]: val }));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFormData(prev => ({ ...prev, image: e.target.files![0] }));
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+      setFormData(prev => ({ ...prev, images: [...prev.images, ...files] }));
+    }
+  };
+
+  const removeImage = (index: number, isExisting: boolean) => {
+    if (isExisting) {
+      setFormData(prev => ({
+        ...prev,
+        existingImageUrls: prev.existingImageUrls.filter((_, i) => i !== index)
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        images: prev.images.filter((_, i) => i !== index)
+      }));
     }
   };
 
@@ -90,22 +125,36 @@ const AdminPage = () => {
     setError('');
 
     try {
-      let imageUrl = '';
-      if (formData.image) {
-        const storageRef = ref(storage, `products/${Date.now()}_${formData.image.name}`);
-        const uploadResult = await uploadBytes(storageRef, formData.image);
-        imageUrl = await getDownloadURL(uploadResult.ref);
+      const uploadedUrls: string[] = [...formData.existingImageUrls];
+      
+      for (const file of formData.images) {
+        const storageRef = ref(storage, `products/${Date.now()}_${file.name}`);
+        const uploadResult = await uploadBytes(storageRef, file);
+        const url = await getDownloadURL(uploadResult.ref);
+        uploadedUrls.push(url);
+      }
+
+      if (uploadedUrls.length === 0) {
+        throw new Error('At least one product image is required.');
       }
 
       const productData = {
         name: formData.name,
         category: formData.category,
         price: parseFloat(formData.price),
+        originalPrice: parseFloat(formData.originalPrice || formData.price),
         stock: parseInt(formData.stock),
         description: formData.description,
-        imageUrl: imageUrl || (isEditing ? products.find(p => p.id === isEditing)?.imageUrl : 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1000&auto=format&fit=crop'),
+        imageUrl: uploadedUrls[0], // Main image
+        imageUrls: uploadedUrls, // All images
+        sizes: formData.sizes.split(',').map(s => s.trim()).filter(Boolean),
+        colors: formData.colors.split(',').map(c => c.trim()).filter(Boolean),
+        isTrending: formData.isTrending,
+        isNewArrival: formData.isNewArrival,
+        isBestSeller: formData.isBestSeller,
+        discount: parseInt(formData.discount),
         updatedAt: serverTimestamp(),
-        inventoryCode: `AST-${Math.random().toString(36).substring(2, 7).toUpperCase()}`
+        inventoryCode: `DRS-${Math.random().toString(36).substring(2, 7).toUpperCase()}`
       };
 
       if (isEditing) {
@@ -119,7 +168,22 @@ const AdminPage = () => {
 
       setShowAddModal(false);
       setIsEditing(null);
-      setFormData({ name: '', category: 'Modern', price: '', stock: '', description: '', image: null });
+      setFormData({ 
+        name: '', 
+        category: 'Women Clothing', 
+        price: '', 
+        originalPrice: '',
+        stock: '', 
+        description: '', 
+        images: [], 
+        existingImageUrls: [],
+        sizes: 'XS, S, M, L, XL',
+        colors: 'White, Black, Peach',
+        isTrending: false,
+        isNewArrival: true,
+        isBestSeller: false,
+        discount: '0'
+      });
     } catch (err: any) {
       console.error(err);
       setError(err.message);
@@ -143,9 +207,17 @@ const AdminPage = () => {
       name: product.name,
       category: product.category,
       price: product.price.toString(),
+      originalPrice: (product.originalPrice || product.price).toString(),
       stock: product.stock.toString(),
       description: product.description || '',
-      image: null
+      images: [],
+      existingImageUrls: product.imageUrls || [product.imageUrl],
+      sizes: product.sizes?.join(', ') || '',
+      colors: product.colors?.join(', ') || '',
+      isTrending: !!product.isTrending,
+      isNewArrival: !!product.isNewArrival,
+      isBestSeller: !!product.isBestSeller,
+      discount: (product.discount || 0).toString()
     });
     setIsEditing(product.id);
     setShowAddModal(true);
@@ -493,16 +565,15 @@ const AdminPage = () => {
                          onChange={handleInputChange}
                          className="w-full bg-secondary/5 border border-secondary/10 py-4 px-6 outline-none focus:border-accent text-sm font-bold uppercase tracking-widest appearance-none cursor-pointer"
                        >
-                         <option value="Modern">Modern Style</option>
-                         <option value="Combo">Combo Clothing</option>
-                         <option value="Couple">Couple Outfits</option>
-                         <option value="Archive">The Archive</option>
+                         {categories.map(cat => (
+                           <option key={cat} value={cat}>{cat}</option>
+                         ))}
                        </select>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                         <label className="text-[10px] font-black uppercase tracking-widest text-secondary/40">Valuation ($)</label>
+                         <label className="text-[10px] font-black uppercase tracking-widest text-secondary/40">Sale Price (₹)</label>
                          <input 
                            required
                            type="number"
@@ -513,7 +584,20 @@ const AdminPage = () => {
                          />
                       </div>
                       <div className="space-y-2">
-                         <label className="text-[10px] font-black uppercase tracking-widest text-secondary/40">Quantity</label>
+                         <label className="text-[10px] font-black uppercase tracking-widest text-secondary/40">Original Price (₹)</label>
+                         <input 
+                           type="number"
+                           name="originalPrice"
+                           value={formData.originalPrice}
+                           onChange={handleInputChange}
+                           className="w-full bg-secondary/5 border border-secondary/10 py-4 px-6 outline-none focus:border-accent text-sm font-bold uppercase tracking-widest"
+                         />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                         <label className="text-[10px] font-black uppercase tracking-widest text-secondary/40">Stock Units</label>
                          <input 
                            required
                            type="number"
@@ -523,32 +607,94 @@ const AdminPage = () => {
                            className="w-full bg-secondary/5 border border-secondary/10 py-4 px-6 outline-none focus:border-accent text-sm font-bold uppercase tracking-widest"
                          />
                       </div>
+                      <div className="space-y-2">
+                         <label className="text-[10px] font-black uppercase tracking-widest text-secondary/40">Discount %</label>
+                         <input 
+                           type="number"
+                           name="discount"
+                           value={formData.discount}
+                           onChange={handleInputChange}
+                           className="w-full bg-secondary/5 border border-secondary/10 py-4 px-6 outline-none focus:border-accent text-sm font-bold uppercase tracking-widest"
+                         />
+                      </div>
+                    </div>
+
+                    <div className="space-y-4 pt-4 border-t border-secondary/5">
+                       <label className="text-[10px] font-black uppercase tracking-widest text-secondary/40">Tactical Toggles</label>
+                       <div className="flex flex-wrap gap-6">
+                          <label className="flex items-center gap-2 cursor-pointer group">
+                             <input type="checkbox" name="isTrending" checked={formData.isTrending} onChange={handleInputChange} className="hidden" />
+                             <div className={`w-4 h-4 border-2 flex items-center justify-center transition-all ${formData.isTrending ? 'bg-accent border-accent' : 'border-secondary/20'}`}>
+                                {formData.isTrending && <X size={10} className="text-white rotate-45" />}
+                             </div>
+                             <span className="text-[10px] font-black uppercase tracking-widest opacity-60 group-hover:opacity-100">Trending</span>
+                          </label>
+                          <label className="flex items-center gap-2 cursor-pointer group">
+                             <input type="checkbox" name="isNewArrival" checked={formData.isNewArrival} onChange={handleInputChange} className="hidden" />
+                             <div className={`w-4 h-4 border-2 flex items-center justify-center transition-all ${formData.isNewArrival ? 'bg-accent border-accent' : 'border-secondary/20'}`}>
+                                {formData.isNewArrival && <X size={10} className="text-white rotate-45" />}
+                             </div>
+                             <span className="text-[10px] font-black uppercase tracking-widest opacity-60 group-hover:opacity-100">New Arrival</span>
+                          </label>
+                          <label className="flex items-center gap-2 cursor-pointer group">
+                             <input type="checkbox" name="isBestSeller" checked={formData.isBestSeller} onChange={handleInputChange} className="hidden" />
+                             <div className={`w-4 h-4 border-2 flex items-center justify-center transition-all ${formData.isBestSeller ? 'bg-accent border-accent' : 'border-secondary/20'}`}>
+                                {formData.isBestSeller && <X size={10} className="text-white rotate-45" />}
+                             </div>
+                             <span className="text-[10px] font-black uppercase tracking-widest opacity-60 group-hover:opacity-100">Best Seller</span>
+                          </label>
+                       </div>
                     </div>
                   </div>
 
                   <div className="space-y-6">
                     <div className="space-y-2">
-                       <label className="text-[10px] font-black uppercase tracking-widest text-secondary/40">Asset Manifest (Image)</label>
-                       <div className="relative group divide-y divide-secondary/10 border border-secondary/10">
-                          <div className="aspect-square bg-secondary/5 flex items-center justify-center relative overflow-hidden">
-                             {formData.image ? (
-                               <img src={URL.createObjectURL(formData.image)} alt="Preview" className="w-full h-full object-cover" />
-                             ) : (
-                               <div className="text-center p-8">
-                                  <Upload className="mx-auto mb-4 text-secondary/20" size={40} />
-                                  <p className="text-[9px] font-black uppercase tracking-widest text-secondary/30">Upload Visual Data</p>
-                               </div>
-                             )}
-                             <input 
-                               type="file"
-                               onChange={handleFileChange}
-                               className="absolute inset-0 opacity-0 cursor-pointer"
-                               accept="image/*"
-                             />
-                          </div>
-                          <div className="p-4 bg-secondary/5 text-center">
-                             <p className="text-[9px] font-bold uppercase tracking-widest text-secondary/40">Recommended: High-Res Vertical</p>
-                          </div>
+                       <label className="text-[10px] font-black uppercase tracking-widest text-secondary/40">Visual Assets (Gallery)</label>
+                       <div className="grid grid-cols-3 gap-2 mb-4">
+                          {formData.existingImageUrls.map((url, idx) => (
+                             <div key={`exist-${idx}`} className="aspect-square bg-secondary/5 relative group border border-secondary/10">
+                                <img src={url} alt="Gallery" className="w-full h-full object-cover" />
+                                <button type="button" onClick={() => removeImage(idx, true)} className="absolute top-1 right-1 bg-accent text-white p-1 hover:bg-secondary transition-colors">
+                                   <X size={10} />
+                                </button>
+                             </div>
+                          ))}
+                          {formData.images.map((file, idx) => (
+                             <div key={`new-${idx}`} className="aspect-square bg-accent/5 relative group border border-accent/20">
+                                <img src={URL.createObjectURL(file)} alt="New" className="w-full h-full object-cover" />
+                                <button type="button" onClick={() => removeImage(idx, false)} className="absolute top-1 right-1 bg-accent text-white p-1">
+                                   <X size={10} />
+                                </button>
+                             </div>
+                          ))}
+                          <label className="aspect-square bg-secondary/5 border-2 border-dashed border-secondary/10 flex flex-col items-center justify-center cursor-pointer hover:border-accent transition-all group">
+                             <Plus size={20} className="text-secondary/20 group-hover:text-accent" />
+                             <span className="text-[8px] font-black uppercase tracking-widest text-secondary/20 mt-1">Add Image</span>
+                             <input type="file" onChange={handleFileChange} className="hidden" accept="image/*" multiple />
+                          </label>
+                       </div>
+                    </div>
+
+                    <div className="space-y-4">
+                       <div className="space-y-2">
+                          <label className="text-[10px] font-black uppercase tracking-widest text-secondary/40">Size Variants (CSV)</label>
+                          <input 
+                            name="sizes"
+                            value={formData.sizes}
+                            onChange={handleInputChange}
+                            placeholder="S, M, L, XL"
+                            className="w-full bg-secondary/5 border border-secondary/10 py-4 px-6 outline-none focus:border-accent text-[10px] font-black uppercase tracking-widest"
+                          />
+                       </div>
+                       <div className="space-y-2">
+                          <label className="text-[10px] font-black uppercase tracking-widest text-secondary/40">Color Palette (CSV)</label>
+                          <input 
+                            name="colors"
+                            value={formData.colors}
+                            onChange={handleInputChange}
+                            placeholder="White, Black, Peach"
+                            className="w-full bg-secondary/5 border border-secondary/10 py-4 px-6 outline-none focus:border-accent text-[10px] font-black uppercase tracking-widest"
+                          />
                        </div>
                     </div>
                   </div>

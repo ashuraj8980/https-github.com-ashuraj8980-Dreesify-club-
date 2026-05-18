@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
+import { Chrome, Mail, Lock, ArrowRight } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -9,113 +11,137 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
-  const { login, signup } = useAuth();
+  const { login, signup, googleLogin } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError('');
     try {
       if (isLogin) {
         await login(email, password);
+        toast.success('Successfully logged in');
       } else {
         await signup(email, password);
+        toast.success('Account created successfully');
       }
       navigate('/');
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
-        setError('AUTHENTICATION_FAILED: INVALID_CREDENTIALS');
-      } else if (err.code === 'auth/email-already-in-use') {
-        setError('REGISTRATION_FAILED: IDENTITY_EXISTS');
-      } else if (err.code === 'auth/weak-password') {
-        setError('SECURITY_WARNING: WEAK_CREDENTIALS');
-      } else {
-        setError(`SYSTEM_ERROR: ${err.message?.toUpperCase() || 'UNKNOWN_FAILURE'}`);
-      }
+      setError(err.message || 'Authentication failed');
+      toast.error(err.message || 'Authentication failed');
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      await googleLogin();
+      toast.success('Logged in with Google');
+      navigate('/');
+    } catch (err: any) {
+      toast.error('Google login failed');
+    }
+  };
+
   return (
-    <div className="min-h-full flex items-center justify-center p-6 bg-primary">
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[150px] md:text-[300px] font-black opacity-[0.02] font-serif uppercase select-none text-secondary">
-          {isLogin ? 'LOGIN' : 'SIGNUP'}
+    <div className="min-h-screen flex flex-col lg:flex-row bg-white">
+      {/* Left Column: Visual */}
+      <div className="hidden lg:flex lg:w-1/2 bg-[#F9F8F6] items-center justify-center p-20 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80')] bg-cover bg-center grayscale"></div>
+        <div className="relative z-10 text-center">
+           <h2 className="text-[12vw] font-serif font-black italic text-secondary/5 leading-[0.8] mb-8 select-none">DRESSIFY</h2>
+           <p className="text-sm font-black uppercase tracking-[0.5em] text-accent">Strategic Fashion Collection</p>
         </div>
       </div>
 
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="w-full max-w-md bg-white border border-secondary/10 p-8 md:p-12 relative z-10 shadow-2xl"
-      >
-        <div className="mb-10 text-center">
-          <h2 className="text-4xl font-black tracking-tighter mb-2 font-serif text-secondary uppercase">
-            {isLogin ? 'Portal Access' : 'Create Identity'}
-          </h2>
-          <p className="text-[10px] font-sans font-bold uppercase tracking-[0.3em] opacity-40 text-secondary">
-            Level 01 Security Authorization
-          </p>
-        </div>
-
-        {error && (
-          <div className="bg-accent/10 border border-accent/20 text-accent p-4 text-[11px] font-bold uppercase tracking-widest mb-8 text-center leading-relaxed">
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
-            <label className="text-[10px] font-bold uppercase tracking-widest text-secondary block">Identity / Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-secondary/5 border-b-2 border-secondary/10 focus:border-accent p-4 outline-none transition-colors font-sans text-sm text-secondary"
-              required
-              placeholder="operator@dreesify.club"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-[10px] font-bold uppercase tracking-widest text-secondary block">Credentials / Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-secondary/5 border-b-2 border-secondary/10 focus:border-accent p-4 outline-none transition-colors font-sans text-sm text-secondary"
-              required
-              placeholder="••••••••"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full bg-secondary text-primary font-sans font-black uppercase tracking-widest py-5 px-6 mt-8 active:scale-[0.98] transition-all disabled:opacity-50 hover:bg-secondary/90 flex items-center justify-center gap-4 cursor-pointer"
+      {/* Right Column: Auth Form */}
+      <div className="flex-1 flex flex-col justify-center p-8 md:p-16 lg:p-24 relative">
+        <div className="max-w-md w-full mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-12"
           >
-            {isSubmitting ? 'Verifying...' : (isLogin ? 'Authorize Access' : 'Submit Manifest')}
-            {!isSubmitting && <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>}
-          </button>
-        </form>
+            <h1 className="text-4xl md:text-5xl font-serif font-black italic uppercase tracking-tight text-secondary mb-4">
+              {isLogin ? 'Sign In' : 'Join Us'}
+            </h1>
+            <p className="text-sm text-secondary/50 font-medium">
+              Access your personal archive and exclusive collective benefits.
+            </p>
+          </motion.div>
 
-        <div className="mt-8 text-center">
-          <button 
-            onClick={() => setIsLogin(!isLogin)}
-            className="text-[10px] font-black uppercase tracking-widest text-secondary/40 hover:text-accent transition-colors cursor-pointer"
-          >
-            {isLogin ? 'New Operator? Request Access' : 'Existing Operator? Return to Portal'}
-          </button>
-        </div>
+          <div className="space-y-4 mb-10">
+             <button 
+               onClick={handleGoogleLogin}
+               className="w-full flex items-center justify-center gap-4 border border-secondary/10 py-5 hover:bg-secondary hover:text-primary transition-all group"
+             >
+                <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center border border-secondary/10 overflow-hidden">
+                   <img src="https://www.google.com/favicon.ico" alt="Google" className="w-full h-full" />
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em]">Continue with Google</span>
+             </button>
+             
+             <div className="flex items-center gap-4 py-4">
+                <div className="flex-1 h-[1px] bg-secondary/5"></div>
+                <span className="text-[10px] font-black uppercase tracking-widest opacity-20">Or use email</span>
+                <div className="flex-1 h-[1px] bg-secondary/5"></div>
+             </div>
+          </div>
 
-        <div className="mt-12 pt-8 border-t border-secondary/10 flex justify-between items-center opacity-40">
-          <span className="text-[9px] font-bold uppercase tracking-widest text-secondary">Protocol: Secure-SSL</span>
-          <span className="text-[9px] font-bold uppercase tracking-widest text-secondary">System: Operational</span>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-1">
+              <label className="text-[10px] font-black uppercase tracking-widest text-secondary/40 block ml-1">Email Address</label>
+              <div className="relative">
+                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-secondary/20" size={16} />
+                 <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-[#F9F8F6] border-b-2 border-transparent focus:border-accent p-5 pl-12 outline-none transition-all font-sans text-sm font-semibold"
+                  required
+                  placeholder="name@example.com"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-[10px] font-black uppercase tracking-widest text-secondary/40 block ml-1">Password</label>
+              <div className="relative">
+                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-secondary/20" size={16} />
+                 <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full bg-[#F9F8F6] border-b-2 border-transparent focus:border-accent p-5 pl-12 outline-none transition-all font-sans text-sm font-semibold"
+                  required
+                  placeholder="••••••••"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-secondary text-primary font-black uppercase text-[11px] tracking-[0.3em] py-6 shadow-2xl hover:bg-accent transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-4 mt-10"
+            >
+              {isSubmitting ? 'Authenticating...' : (isLogin ? 'Sign In' : 'Join Collection')}
+              {!isSubmitting && <ArrowRight size={16} />}
+            </button>
+          </form>
+
+          <div className="mt-12 text-center">
+            <button 
+              onClick={() => setIsLogin(!isLogin)}
+              className="text-[10px] font-black uppercase tracking-widest text-secondary shadow-sm hover:text-accent transition-all pb-1 border-b border-accent"
+            >
+              {isLogin ? 'Create New Account' : 'Already A Member? Sign In'}
+            </button>
+          </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };

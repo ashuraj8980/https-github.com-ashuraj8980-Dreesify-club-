@@ -1,5 +1,13 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { 
+  getAuth, 
+  onAuthStateChanged, 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  signOut, 
+  signInWithPopup, 
+  GoogleAuthProvider 
+} from "firebase/auth";
 import { app } from '../firebase/config';
 
 interface AuthContextType {
@@ -8,6 +16,7 @@ interface AuthContextType {
   loading: boolean;
   login: (email: string, password: string) => Promise<any>;
   signup: (email: string, password: string) => Promise<any>;
+  googleLogin: () => Promise<any>;
   logout: () => Promise<void>;
 }
 
@@ -33,7 +42,6 @@ export const AuthProvider = ({ children }) => {
         const ownerEmails = ['sanachauhan393@gmail.com', 'ashukumar8076801908@gmail.com'];
         user.isAdmin = ownerEmails.includes(user.email);
         user.isOwner = ownerEmails.includes(user.email);
-        user.displayName = user.email === 'ashukumar8076801908@gmail.com' ? 'Ashu' : (user.email === 'sanachauhan393@gmail.com' ? 'Sana' : user.displayName);
       }
       setUser(user);
       setLoading(false);
@@ -50,6 +58,11 @@ export const AuthProvider = ({ children }) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
+  const googleLogin = () => {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(auth, provider);
+  };
+
   const logout = () => {
     return signOut(auth);
   };
@@ -60,6 +73,7 @@ export const AuthProvider = ({ children }) => {
     loading,
     login,
     signup,
+    googleLogin,
     logout
   };
 

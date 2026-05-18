@@ -11,13 +11,18 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.0",
+    "clsx": "^2.1.1",
     "firebase": "^10.12.3",
     "framer-motion": "^12.38.0",
     "lucide-react": "^0.395.0",
     "motion": "^12.38.0",
+    "razorpay": "^2.9.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.23.1"
+    "react-hot-toast": "^2.6.0",
+    "react-router-dom": "^6.23.1",
+    "swiper": "^12.1.4",
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
     "@eslint/js": "8.57.0",
