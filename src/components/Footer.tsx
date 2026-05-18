@@ -24,8 +24,8 @@ const Footer = () => {
         </div>
 
         <div>
-          <h4 className="text-[10px] font-black uppercase tracking-[0.2em] mb-8 text-secondary/40">Studio Archive</h4>
-          <ul className="space-y-4 text-sm font-bold uppercase tracking-widest">
+          <h4 className="text-[11px] font-bold uppercase tracking-widest mb-8 text-secondary/40">Studio Archive</h4>
+          <ul className="space-y-4 text-xs font-bold uppercase tracking-widest text-[#121212]/80">
             <li><a href="#" className="hover:text-accent transition-colors">Spring Capsule</a></li>
             <li><a href="#" className="hover:text-accent transition-colors">Vol 01: Raw Edge</a></li>
             <li><a href="#" className="hover:text-accent transition-colors">Utility Series</a></li>
@@ -34,8 +34,8 @@ const Footer = () => {
         </div>
 
         <div>
-          <h4 className="text-[10px] font-black uppercase tracking-[0.2em] mb-8 text-secondary/40">Collective Info</h4>
-          <ul className="space-y-4 text-sm font-bold uppercase tracking-widest">
+          <h4 className="text-[11px] font-bold uppercase tracking-widest mb-8 text-secondary/40">Collective Info</h4>
+          <ul className="space-y-4 text-xs font-bold uppercase tracking-widest text-[#121212]/80">
             <li><a href="#" className="hover:text-accent transition-colors">Sustainability</a></li>
             <li><a href="#" className="hover:text-accent transition-colors">Manufacturing</a></li>
             <li><a href="#" className="hover:text-accent transition-colors">Privacy Policy</a></li>
@@ -44,13 +44,13 @@ const Footer = () => {
         </div>
 
         <div>
-          <h4 className="text-[10px] font-black uppercase tracking-[0.2em] mb-8 text-secondary/40">Direct Contact</h4>
+          <h4 className="text-[11px] font-bold uppercase tracking-widest mb-8 text-secondary/40">Direct Contact</h4>
           <p className="text-sm text-secondary/60 mb-6 font-sans">Join the collective to receive early access to seasonal drops and limited archival pieces.</p>
           <div className="flex bg-secondary/5 p-1 border border-secondary/10">
             <input 
               type="email" 
               placeholder="COLLECTIVE@EMAIL.COM" 
-              className="bg-transparent text-[10px] font-bold uppercase tracking-widest px-4 py-3 outline-none flex-1"
+              className="bg-transparent text-[11px] font-bold uppercase tracking-widest px-4 py-3 outline-none flex-1"
             />
             <button className="bg-secondary text-primary px-6 py-2">
               <Mail size={16} />
@@ -61,7 +61,7 @@ const Footer = () => {
 
       {/* Marquee Footer */}
       <div className="h-12 bg-secondary text-primary flex items-center overflow-hidden">
-        <div className="flex animate-marquee whitespace-nowrap gap-20 opacity-80 font-sans text-[10px] font-bold uppercase tracking-[0.5em] px-12">
+        <div className="flex animate-marquee whitespace-nowrap gap-20 opacity-80 text-[11px] font-bold uppercase tracking-widest px-12">
           <span>DRESSIFY CLUB EXCLUSIVE ACCESS</span>
           <span>●</span>
           <span>AUTUMN 24 LOOKBOOK RELEASED</span>

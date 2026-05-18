@@ -48,7 +48,7 @@ const Header = () => {
         {/* Center: Dressify Logo */}
         <div className="flex justify-center">
           <Link to="/" className="flex items-center">
-            <h1 className="text-2xl md:text-4xl font-black tracking-[-0.05em] leading-none text-secondary uppercase font-serif">
+            <h1 className="text-2xl md:text-4xl font-bold tracking-tight leading-none text-secondary uppercase">
               DRESSIFY<span className="text-accent">.</span>
             </h1>
           </Link>
@@ -91,12 +91,12 @@ const Header = () => {
                       <User size={16} className="text-secondary group-hover:text-accent transition-colors" />
                     )}
                   </div>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-secondary group-hover:text-accent transition-colors hidden lg:block">
+                  <span className="text-[11px] font-bold uppercase tracking-widest text-secondary group-hover:text-accent transition-colors hidden lg:block">
                     {user.displayName || user.email?.split('@')[0]}
                   </span>
                 </Link>
                 {user.isAdmin && (
-                  <Link to="/admin" className="text-[9px] font-black uppercase tracking-widest bg-secondary text-primary px-3 py-1.5 hover:bg-accent transition-colors rounded-sm">Admin</Link>
+                  <Link to="/admin" className="text-[11px] font-bold uppercase tracking-widest bg-secondary text-primary px-3 py-1.5 hover:bg-accent transition-colors rounded-sm">Admin</Link>
                 )}
               </div>
             ) : (
@@ -140,7 +140,7 @@ const Header = () => {
                     <Link 
                       to={cat.path} 
                       onClick={() => setIsMenuOpen(false)}
-                      className="text-2xl md:text-3xl font-serif font-black italic hover:text-accent transition-colors uppercase tracking-tight"
+                      className="text-2xl md:text-3xl font-bold hover:text-accent transition-colors uppercase tracking-tight"
                     >
                       {cat.name}
                     </Link>
@@ -170,7 +170,7 @@ const Header = () => {
             </div>
             
             <div className="p-8 border-t border-secondary/5 text-center">
-               <p className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40">© 2024 DRESSIFY COLLECTIVE</p>
+               <p className="text-[11px] font-bold uppercase tracking-widest opacity-40">© 2024 DRESSIFY COLLECTIVE</p>
             </div>
           </motion.div>
         )}
@@ -190,8 +190,8 @@ const Header = () => {
               <input 
                 autoFocus
                 type="text" 
-                placeholder="SEARCH ARCHIVE..." 
-                className="flex-1 text-3xl font-serif font-black italic uppercase text-secondary outline-none placeholder:opacity-10"
+                placeholder="SEARCH CATALOG..." 
+                className="flex-1 text-3xl font-bold uppercase text-secondary outline-none placeholder:opacity-10"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     navigate(`/products?q=${e.currentTarget.value}`);

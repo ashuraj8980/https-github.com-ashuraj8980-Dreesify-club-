@@ -29,7 +29,7 @@ const AnnouncementBar = () => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -20, opacity: 0 }}
           transition={{ duration: 0.5, ease: 'easeInOut' }}
-          className="text-[10px] font-black uppercase tracking-[0.2em] text-center w-full"
+          className="text-[10px] font-bold uppercase tracking-widest text-center w-full"
         >
           {messages[index]}
         </motion.p>

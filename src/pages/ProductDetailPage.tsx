@@ -116,8 +116,8 @@ const ProductDetailPage = () => {
       <div className="bg-white min-h-screen flex flex-col items-center justify-center p-8">
         <div className="max-w-md text-center">
            <History className="mx-auto text-secondary/10 mb-10" size={80} />
-           <h2 className="text-4xl font-serif font-black italic text-secondary leading-none mb-6 uppercase">Artifact Not Found</h2>
-           <button onClick={() => navigate('/products')} className="bg-secondary text-primary px-12 py-6 text-[10px] font-black uppercase tracking-widest hover:bg-accent transition-all">
+           <h2 className="text-4xl font-bold text-secondary mb-6 uppercase">Artifact Not Found</h2>
+           <button onClick={() => navigate('/products')} className="bg-secondary text-primary px-12 py-6 text-xs font-bold uppercase tracking-widest hover:bg-accent transition-all">
              Browse Catalog
            </button>
         </div>
@@ -185,24 +185,24 @@ const ProductDetailPage = () => {
               {/* Header Info */}
               <div className="space-y-6">
                 <div className="flex flex-wrap items-center gap-4">
-                  <span className="bg-secondary text-primary px-3 py-1 text-[9px] font-black uppercase tracking-widest">{product.category}</span>
-                  {product.isNewArrival && <span className="bg-accent text-white px-3 py-1 text-[9px] font-black uppercase tracking-widest">New Arrival</span>}
+                  <span className="bg-secondary text-primary px-3 py-1 text-[11px] font-bold uppercase tracking-widest">{product.category}</span>
+                  {product.isNewArrival && <span className="bg-accent text-white px-3 py-1 text-[11px] font-bold uppercase tracking-widest">New Arrival</span>}
                   <div className="flex items-center gap-1 ml-auto">
                     {[...Array(5)].map((_, i) => <Star key={i} size={12} className="fill-accent text-accent" />)}
-                    <span className="text-[10px] font-black uppercase ml-2 opacity-40">(48 Reviews)</span>
+                    <span className="text-[11px] font-bold uppercase ml-2 opacity-40">(48 Reviews)</span>
                   </div>
                 </div>
                 
-                <h1 className="text-5xl md:text-7xl font-serif font-black italic uppercase text-secondary leading-none">
+                <h1 className="text-5xl md:text-7xl font-bold uppercase text-secondary">
                   {product.name}
                 </h1>
 
                 <div className="flex items-end gap-6 text-secondary">
-                  <span className="text-4xl md:text-5xl font-serif font-black italic text-accent">₹{product.price}</span>
+                  <span className="text-4xl md:text-5xl font-bold text-accent">₹{product.price}</span>
                   {product.originalPrice > product.price && (
                     <span className="text-xl font-bold text-secondary/20 line-through pb-1">₹{product.originalPrice}</span>
                   )}
-                  <span className="text-[10px] font-black uppercase tracking-widest bg-green-50 text-green-600 px-3 py-1 rounded-full border border-green-100">
+                  <span className="text-[11px] font-bold uppercase tracking-widest bg-green-50 text-green-600 px-3 py-1 rounded-full border border-green-100">
                     {product.discount}% OFF ARCHIVE
                   </span>
                 </div>
@@ -216,7 +216,7 @@ const ProductDetailPage = () => {
                 {product.sizes && product.sizes.length > 0 && (
                   <div className="space-y-4">
                     <div className="flex justify-between items-end">
-                       <h4 className="text-[10px] font-black uppercase tracking-widest text-secondary">Dimensions / Size</h4>
+                       <h4 className="text-[11px] font-bold uppercase tracking-widest text-secondary">Dimensions / Size</h4>
                        <button className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest opacity-40 hover:text-accent transition-colors">
                           <Ruler size={14} /> Size Guideline
                        </button>
@@ -226,7 +226,7 @@ const ProductDetailPage = () => {
                          <button 
                            key={size}
                            onClick={() => setSelectedSize(size)}
-                           className={`w-14 h-14 border flex items-center justify-center text-xs font-black uppercase tracking-widest transition-all ${selectedSize === size ? 'bg-secondary text-primary border-secondary' : 'bg-white text-secondary border-secondary/10 hover:border-accent'}`}
+                           className={`w-14 h-14 border flex items-center justify-center text-xs font-bold uppercase tracking-widest transition-all ${selectedSize === size ? 'bg-secondary text-primary border-secondary' : 'bg-white text-secondary border-secondary/10 hover:border-accent'}`}
                          >
                            {size}
                          </button>
@@ -258,12 +258,12 @@ const ProductDetailPage = () => {
 
                 {/* Quantity */}
                 <div className="space-y-4">
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-secondary">Operational Quantity</h4>
+                  <h4 className="text-[11px] font-bold uppercase tracking-widest text-secondary">Operational Quantity</h4>
                   <div className="flex items-center w-32 border border-secondary/10 p-2">
                      <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-10 h-10 flex items-center justify-center hover:bg-secondary/5">
                         <Minus size={14} />
                      </button>
-                     <span className="flex-1 text-center font-black text-xs">{quantity}</span>
+                     <span className="flex-1 text-center font-bold text-xs">{quantity}</span>
                      <button onClick={() => setQuantity(quantity + 1)} className="w-10 h-10 flex items-center justify-center hover:bg-secondary/5">
                         <Plus size={14} />
                      </button>
@@ -276,7 +276,7 @@ const ProductDetailPage = () => {
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <button 
                       onClick={handleAddToCart}
-                      className="w-full bg-secondary text-primary font-black uppercase text-[11px] tracking-widest py-8 hover:bg-accent transition-all flex items-center justify-center gap-6 shadow-2xl active:scale-95 group"
+                      className="w-full bg-secondary text-primary font-bold uppercase text-xs tracking-[0.2em] py-8 hover:bg-accent transition-all flex items-center justify-center gap-6 shadow-2xl active:scale-95 group"
                     >
                       SECURE ARTIFACT <ShoppingBag size={18} className="group-hover:rotate-12 transition-transform" />
                     </button>
@@ -285,7 +285,7 @@ const ProductDetailPage = () => {
                          handleAddToCart();
                          navigate('/checkout');
                       }}
-                      className="w-full bg-white border border-secondary text-secondary font-black uppercase text-[11px] tracking-widest py-8 hover:bg-secondary hover:text-primary transition-all flex items-center justify-center gap-6 active:scale-95 group"
+                      className="w-full bg-white border border-secondary text-secondary font-bold uppercase text-xs tracking-[0.2em] py-8 hover:bg-secondary hover:text-primary transition-all flex items-center justify-center gap-6 active:scale-95 group"
                     >
                       INSTANT CHECKOUT <ArrowRight size={18} className="group-hover:translate-x-3 transition-transform" />
                     </button>
@@ -356,8 +356,8 @@ const ProductDetailPage = () => {
           <section className="mt-40">
              <div className="flex justify-between items-end mb-16 px-4">
                 <div className="space-y-4">
-                   <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent">Related Synchronizations</span>
-                   <h3 className="text-4xl md:text-5xl font-serif font-black italic uppercase leading-none">Complete<br/>The Aesthetic</h3>
+                   <span className="text-xs font-bold uppercase tracking-widest text-accent">Related Synchronizations</span>
+                   <h3 className="text-4xl md:text-5xl font-bold uppercase leading-tight">Complete<br/>The Aesthetic</h3>
                 </div>
                 <Link to="/products" className="text-xs font-black uppercase tracking-widest border-b-2 border-secondary pb-1 hover:text-accent hover:border-accent transition-all">Explore Entire Series</Link>
              </div>
@@ -391,19 +391,19 @@ const ProductCard = ({ product }: { product: any }) => {
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
            <div className="bg-white text-secondary px-6 py-4 flex items-center gap-3 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 shadow-2xl">
               <ShoppingBag size={14} />
-              <span className="text-[10px] font-black uppercase tracking-widest">Select Variant</span>
+              <span className="text-xs font-bold uppercase tracking-widest">Select Variant</span>
            </div>
         </div>
       </Link>
       <div className="space-y-2 px-2">
-        <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary/40">{product.category}</h4>
+        <h4 className="text-[10px] font-bold uppercase tracking-widest text-secondary/40">{product.category}</h4>
         <Link to={`/products/${product.id}`}>
-          <h3 className="text-xl font-serif font-black italic uppercase group-hover:text-accent transition-colors leading-[1]">{product.name}</h3>
+          <h3 className="text-xl font-bold uppercase group-hover:text-accent transition-colors leading-[1.2]">{product.name}</h3>
         </Link>
         <div className="pt-2 flex items-center gap-4">
-          <span className="text-lg font-black italic text-secondary">₹{product.price}</span>
+          <span className="text-lg font-bold text-secondary">₹{product.price}</span>
           {product.originalPrice > product.price && (
-            <span className="text-sm font-bold text-secondary/20 line-through">₹{product.originalPrice}</span>
+            <span className="text-sm font-semibold text-secondary/20 line-through">₹{product.originalPrice}</span>
           )}
         </div>
       </div>

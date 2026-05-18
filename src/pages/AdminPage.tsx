@@ -458,7 +458,7 @@ const AdminPage = () => {
                          </div>
                          <div>
                             <p className="font-black text-secondary uppercase tracking-tighter text-lg">{p.name}</p>
-                            <p className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] font-mono">{p.inventoryCode || 'INV-000'}</p>
+                            <p className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">{p.inventoryCode || 'INV-000'}</p>
                             <p className="text-[10px] font-black text-secondary/40 mt-1">${p.price}</p>
                          </div>
                        </div>

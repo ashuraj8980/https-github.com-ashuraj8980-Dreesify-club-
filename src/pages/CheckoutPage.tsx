@@ -140,19 +140,19 @@ const CheckoutPage = () => {
       <section className="px-6 md:px-12 py-16 md:py-24 border-b border-secondary/10 bg-white mb-20">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end gap-12">
           <div>
-            <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-accent mb-6 hover:-translate-x-2 transition-transform cursor-pointer">
-              <ChevronLeft size={16} /> Retrograde to Cart
+            <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent mb-6 hover:-translate-x-2 transition-transform cursor-pointer">
+              <ChevronLeft size={16} /> Back to Cart
             </button>
-            <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-4 block">Final Stage / Dispatch Logistics</span>
-            <h1 className="text-6xl md:text-8xl font-black tracking-tighter font-serif uppercase italic leading-none">The<br/><span className="text-accent">Protocols</span></h1>
+            <span className="text-xs font-bold uppercase tracking-widest opacity-40 mb-4 block">Final Stage / Dispatch Logistics</span>
+            <h1 className="text-6xl md:text-8xl font-bold tracking-tight uppercase leading-none">The<br/><span className="text-accent">Protocols</span></h1>
           </div>
           <div className="max-w-md border-l-2 border-secondary/10 pl-8">
-            <p className="text-sm font-sans text-secondary/60 leading-relaxed italic mb-4">
-              &quot;Every shipment is a manifestation of our structural integrity. Ensure your coordinates are precise.&quot;
+            <p className="text-sm font-sans text-secondary/60 leading-relaxed mb-4">
+              "Ensuring your shipment reaches you with precision and care."
             </p>
             <div className="flex gap-4 items-center">
               <ShieldCheck size={20} className="text-accent" />
-              <span className="text-[9px] font-black uppercase tracking-[0.2em] text-secondary">Verified Secure Tunnel Protocol Active</span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-secondary">Verified Secure Tunnel Protocol Active</span>
             </div>
           </div>
         </div>
@@ -165,23 +165,23 @@ const CheckoutPage = () => {
             {/* Identity Group */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-10">
               <div className="flex items-center gap-4">
-                <span className="w-10 h-10 rounded-full border-2 border-secondary/10 flex items-center justify-center font-serif font-black italic text-sm">01</span>
-                <h3 className="text-2xl font-black font-serif italic text-secondary uppercase tracking-tight">Identity / Coordination</h3>
+                <span className="w-10 h-10 rounded-full border-2 border-secondary/10 flex items-center justify-center font-bold text-sm">01</span>
+                <h3 className="text-2xl font-bold text-secondary uppercase tracking-tight">Identity / Coordination</h3>
               </div>
               
               <div className="space-y-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary/40">Full Name Identifier</label>
+                    <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-secondary/40">Full Name Identifier</label>
                     <input required id="fullName" value={formData.fullName} onChange={handleInputChange} className="w-full bg-white border-b-2 border-secondary/5 focus:border-accent py-4 px-2 outline-none font-sans text-sm transition-all" type="text" placeholder="FULL_NAME" />
                   </div>
                   <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary/40">Dispatch Email</label>
+                    <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-secondary/40">Dispatch Email</label>
                     <input required id="email" value={formData.email} onChange={handleInputChange} className="w-full bg-white border-b-2 border-secondary/5 focus:border-accent py-4 px-2 outline-none font-sans text-sm transition-all" type="email" placeholder="COORDINATES@EMAIL.COM" />
                   </div>
                 </div>
                 <div className="space-y-4">
-                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary/40">Mobile Link (Phone)</label>
+                  <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-secondary/40">Mobile Link (Phone)</label>
                   <input required id="phone" value={formData.phone} onChange={handleInputChange} className="w-full bg-white border-b-2 border-secondary/5 focus:border-accent py-4 px-2 outline-none font-sans text-sm transition-all" type="tel" placeholder="+91 XXXXX XXXXX" />
                 </div>
               </div>
@@ -190,8 +190,8 @@ const CheckoutPage = () => {
             {/* Logistics Group */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="space-y-10">
               <div className="flex items-center gap-4">
-                <span className="w-10 h-10 rounded-full border-2 border-secondary/10 flex items-center justify-center font-serif font-black italic text-sm">02</span>
-                <h3 className="text-2xl font-black font-serif italic text-secondary uppercase tracking-tight">Logistical Coordinates</h3>
+                <span className="w-10 h-10 rounded-full border-2 border-secondary/10 flex items-center justify-center font-bold text-sm">02</span>
+                <h3 className="text-2xl font-bold text-secondary uppercase tracking-tight">Logistical Coordinates</h3>
               </div>
               
               <div className="space-y-8">
@@ -201,15 +201,15 @@ const CheckoutPage = () => {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary/40">City Nucleus</label>
+                    <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-secondary/40">City Nucleus</label>
                     <input required id="city" value={formData.city} onChange={handleInputChange} className="w-full bg-white border-b-2 border-secondary/5 focus:border-accent py-4 px-2 outline-none font-sans text-sm transition-all" type="text" placeholder="CITY" />
                   </div>
                   <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary/40">State/Region Zone</label>
+                    <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-secondary/40">State/Region Zone</label>
                     <input required id="state" value={formData.state} onChange={handleInputChange} className="w-full bg-white border-b-2 border-secondary/5 focus:border-accent py-4 px-2 outline-none font-sans text-sm transition-all" type="text" placeholder="ZONE" />
                   </div>
                   <div className="space-y-4">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary/40">PIN Allocation</label>
+                    <label className="text-[11px] font-bold uppercase tracking-[0.2em] text-secondary/40">PIN Allocation</label>
                     <input required id="pincode" value={formData.pincode} onChange={handleInputChange} className="w-full bg-white border-b-2 border-secondary/5 focus:border-accent py-4 px-2 outline-none font-sans text-sm transition-all" type="text" placeholder="000000" />
                   </div>
                 </div>
@@ -219,8 +219,8 @@ const CheckoutPage = () => {
             {/* Payment Method Group */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="space-y-10">
               <div className="flex items-center gap-4">
-                <span className="w-10 h-10 rounded-full border-2 border-secondary/10 flex items-center justify-center font-serif font-black italic text-sm">03</span>
-                <h3 className="text-2xl font-black font-serif italic text-secondary uppercase tracking-tight">Authorization Method</h3>
+                <span className="w-10 h-10 rounded-full border-2 border-secondary/10 flex items-center justify-center font-bold text-sm">03</span>
+                <h3 className="text-2xl font-bold text-secondary uppercase tracking-tight">Authorization Method</h3>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -233,9 +233,9 @@ const CheckoutPage = () => {
                     <CreditCard size={24} />
                     {paymentMethod === 'online' && <CheckCircle2 size={16} className="text-accent" />}
                   </div>
-                  <p className="text-[10px] font-black uppercase tracking-widest mb-1">Digital Protocol</p>
-                  <p className="text-xl font-serif font-black italic uppercase">Online Payment</p>
-                  <div className="mt-4 inline-block bg-accent text-[8px] font-black uppercase px-2 py-1 rounded-sm text-white">30% DISCOUNT ACTIVE</div>
+                  <p className="text-[11px] font-bold uppercase tracking-widest mb-1">Digital Protocol</p>
+                  <p className="text-xl font-bold uppercase">Online Payment</p>
+                  <div className="mt-4 inline-block bg-accent text-[9px] font-bold uppercase px-2 py-1 rounded-sm text-white">30% DISCOUNT ACTIVE</div>
                 </button>
 
                 <button 
@@ -247,8 +247,8 @@ const CheckoutPage = () => {
                     <Truck size={24} />
                     {paymentMethod === 'cod' && <CheckCircle2 size={16} className="text-accent" />}
                   </div>
-                  <p className="text-[10px] font-black uppercase tracking-widest mb-1">Physical Exchange</p>
-                  <p className="text-xl font-serif font-black italic uppercase">Cash on Delivery</p>
+                  <p className="text-[11px] font-bold uppercase tracking-widest mb-1">Physical Exchange</p>
+                  <p className="text-xl font-bold uppercase">Cash on Delivery</p>
                 </button>
               </div>
             </motion.div>
@@ -267,9 +267,9 @@ const CheckoutPage = () => {
                           <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-[9px] font-black uppercase tracking-widest text-secondary truncate">{item.name}</p>
-                          <p className="text-[8px] font-bold text-secondary/40 mt-1 uppercase">QTY: {item.quantity} | {item.selectedSize}</p>
-                          <p className="text-xs font-black italic text-secondary mt-1">₹{item.price * item.quantity}</p>
+                          <p className="text-[11px] font-bold uppercase tracking-widest text-secondary truncate">{item.name}</p>
+                          <p className="text-[10px] font-bold text-secondary/40 mt-1 uppercase">QTY: {item.quantity} | {item.selectedSize}</p>
+                          <p className="text-sm font-black italic text-secondary mt-1">₹{item.price * item.quantity}</p>
                         </div>
                       </div>
                     ))}
@@ -294,8 +294,8 @@ const CheckoutPage = () => {
                     )}
                     <div className="h-px bg-secondary/5 my-2"></div>
                     <div className="flex justify-between items-end">
-                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-secondary">Final Net Liability</p>
-                      <p className="text-4xl font-serif font-black italic text-secondary">₹{finalTotal}</p>
+                      <p className="text-xs font-bold uppercase tracking-widest text-secondary">Final Net Liability</p>
+                      <p className="text-4xl font-bold text-secondary">₹{finalTotal}</p>
                     </div>
                   </div>
                 </div>
@@ -307,9 +307,9 @@ const CheckoutPage = () => {
                    <button 
                     type="submit" 
                     disabled={isProcessing}
-                    className="w-full bg-secondary text-primary font-black uppercase text-[11px] tracking-[0.3em] py-8 shadow-3xl hover:bg-accent transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-4"
+                    className="w-full bg-secondary text-primary font-bold uppercase text-xs tracking-widest py-8 shadow-3xl hover:bg-accent transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-4"
                    >
-                     {isProcessing ? 'SYNCHRONIZING...' : 'EXECUTE MANIFEST'}
+                     {isProcessing ? 'SYNCHRONIZING...' : 'PLACE ORDER'}
                      <ArrowRight size={18} />
                    </button>
                 </div>
